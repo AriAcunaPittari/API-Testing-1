@@ -1,9 +1,8 @@
-import { Page } from "playwright-core";
+import { APIRequestContext, Page } from "playwright-core";
 
 export class DeleteAPIChecker{
-    page: Page;
-    constructor(page:Page){
-        this.page = page;
-
-    }
+    request: APIRequestContext;
+  constructor(request: APIRequestContext) {
+    this.request = request;
+  }
 }
