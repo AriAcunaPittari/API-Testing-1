@@ -12,30 +12,31 @@ export class GetAPI {
     const requestURL = await this.urlNeeded.urlListUsers;
     const response = await this.request.get(requestURL);
     const getListUsers = await response.json();
-    return getListUsers;
+    return response;
   }
   async SingleUsers() {
     const requestURL = await this.urlNeeded.urlSingleUser;
     const response = await this.request.get(requestURL);
     const getSingleUsers = await response.json();
-    return getSingleUsers;
+    //!Crear IF para obtener status o Data (consultar)
+    return response;
   }
   async NotFound() {
     const requestURL = await this.urlNeeded.urlNotFound;
     const response = await this.request.get(requestURL);
     const getNotFound = await response.json();
-    return getNotFound;
+    return response;
   }
   async ListResourse() {
     const requestURL = await this.urlNeeded.urlListResource;
     const response = await this.request.get(requestURL);
     const getListResource = await response.json();
-    return getListResource;
+    return response;
   }
   async SingleResourse() {
     const requestURL = await this.urlNeeded.urlSingleResource;
     const response = await this.request.get(requestURL);
     const getSingleResourse = await response.json();
-    return getSingleResourse;
+    return response;
   }
 }

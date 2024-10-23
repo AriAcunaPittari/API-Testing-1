@@ -1,4 +1,4 @@
-import { APIRequestContext, Page } from "playwright-core";
+import { APIRequestContext, APIResponse, Page } from "playwright-core";
 import { expect } from "playwright/test";
 
 export class PostAPIChecker{
@@ -7,19 +7,19 @@ export class PostAPIChecker{
       this.request = request;
     }
 
-    async createNewCheck(returnData: any) {
-      await expect(returnData.status()).toBeOK();
+    async createNewCheck(returnData: APIResponse) {
+      await expect(returnData).toBeOK();
     }
-    async registerOKCheck(returnData: any) {
-      await expect(returnData.status()).toBeOK();
+    async registerOKCheck(returnData: APIResponse) {
+      await expect(returnData).toBeOK();
     }
-    async registerNOCheck(returnData: any) {
+    async registerNOCheck(returnData: APIResponse) {
       await expect(returnData.status()).toBe(400);
     }
-    async loginOKCheck(returnData: any) {
-      await expect(returnData.status()).toBeOK();
+    async loginOKCheck(returnData: APIResponse) {
+      await expect(returnData).toBeOK();
     }
-    async loginNOCheck(returnData: any) {
+    async loginNOCheck(returnData: APIResponse) {
       await expect(returnData.status()).toBe(400);
     }
 }

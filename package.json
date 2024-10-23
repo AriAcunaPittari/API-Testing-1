@@ -2,7 +2,13 @@
   "name": "api-testing-1",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "getTest": "npx playwright test --grep @Get",
+    "postTest": "npx playwright test --grep @Post",
+    "putTest": "npx playwright test --grep @Put",
+    "patchTest": "npx playwright test --grep @Patch",
+    "deleteTest": "npx playwright test --grep @Delete"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

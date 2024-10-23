@@ -1,7 +1,7 @@
 import { APIRequestContext, APIResponse } from "playwright-core";
 import { expect } from "playwright/test";
 
-export class PatchAPIChecker {
+export class PutChecker {
   request: APIRequestContext;
   constructor(request: APIRequestContext) {
     this.request = request;

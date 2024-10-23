@@ -24,7 +24,7 @@ export class URLNeeded {
     this.urlListResource = process.env.URL_GET_LISTRESOURCE!;
     this.urlSingleResource = process.env.URL_GET_SINGLERESOURCE!;
     this.urlPostCreate = process.env.URL_POST_CREATE!;
-    this.urlPostLoginOK = process.env.URL_POST_LOGIN_SI!;
+    this.urlPostLoginOK = process.env.URL_POST_LOGIN_OK!;
     this.urlPostLoginNO = process.env.URL_POST_LOGIN_NO!;
     this.urlPostRegisterOK = process.env.URL_POST_REGISTER_OK!;
     this.urlPostRegisterNO = process.env.URL_POST_REGISTER_NO!;

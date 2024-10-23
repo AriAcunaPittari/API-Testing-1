@@ -8,69 +8,44 @@ export class PostAPI {
     this.request = request;
     this.urlNeeded = new URLNeeded(this.request);
   }
-  async createNew() {
+  async createNew(json: boolean, createPayLoad: any) {
     const requestURL = await this.urlNeeded.urlPostCreate;
-    const createPayLoad = {
-      name: "morpheus",
-      job: "leader",
-    };
     const response = await this.request.post(requestURL, {
       data: createPayLoad,
     });
     const postCreate = await response.json();
-    return postCreate;
+    return response;
   }
-  async registerSuccess() {
-    // parametrizar y pasar el dato que necesita.
+  async registerSuccess(registerOKPayload: any) {
     const requestURL = await this.urlNeeded.urlPostRegisterOK!;
-    const registerOKPayload = {
-      email: "eve.holt@reqres.in",
-      password: "pistol",
-    };
-
     const response = await this.request.post(requestURL, {
       data: registerOKPayload,
     });
-
     const postRegisterOk = await response.json();
-    return postRegisterOk;
+    return response;
   }
-  async registerFailed() {
+  async registerFailed(registerNOTPayload: any) {
     const requestURL = await this.urlNeeded.urlPostRegisterNO!;
-    const registerNOTPayload = {
-      email: "sydney@fife",
-    };
-
     const response = await this.request.post(requestURL, {
       data: registerNOTPayload,
     });
-
     const postRegisterNo = await response.json();
-    return postRegisterNo;
+    return response;
   }
-  async loginSuccess() {
+  async loginSuccess(loginOKPayload: any) {
     const requestURL = await this.urlNeeded.urlPostLoginOK!;
-    const loginOKPayload = {
-      email: "eve.holt@reqres.in",
-      password: "cityslicka",
-    };
-
     const response = await this.request.post(requestURL, {
       data: loginOKPayload,
     });
     const postLoginOk = await response.json();
-    return postLoginOk;
+    return response;
   }
-  async loginFailed() {
+  async loginFailed(loginNOTPayload: any) {
     const requestURL = await this.urlNeeded.urlPostLoginNO!;
-    const loginNOTPayload = {
-      email: "peter@klaven",
-    };
-
     const response = await this.request.post(requestURL, {
       data: loginNOTPayload,
     });
     const postLoginNo = await response.json();
-    return postLoginNo;
+    return response;
   }
 }
