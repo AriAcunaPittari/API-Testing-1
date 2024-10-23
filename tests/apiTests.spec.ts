@@ -70,7 +70,6 @@ test.describe("API Testing Practice", () => {
       tag: "@Get",
     },
     async ({ request }) => {
-      //! DUDA
       const singleResourse = new GetAPI(request);
       const singleResourseCheck = new GetAPIChecker(request);
       const returnData = await singleResourse.SingleResourse();
@@ -90,8 +89,7 @@ test.describe("API Testing Practice", () => {
         name: "morpheus",
         job: "leader",
       };
-      const json = false;
-      const returnData = await createNew.createNew(json, createPayLoad);
+      const returnData = await createNew.createNew(createPayLoad);
       await createNewCheck.createNewCheck(returnData);
     }
   );
@@ -173,19 +171,14 @@ test.describe("API Testing Practice", () => {
       tag: "@Put",
     },
     async ({ request }) => {
-      //! DUDA
       const updateUser = new PutAPI(request);
       const updateUserChecker = new PutChecker(request);
-      const userData = {
-        name: "morpheus",
-        job: "zion resident",
-      };
       const updatePayload = {
         name: "morpheus",
         job: "zion resident now",
       };
 
-      const returnData = await updateUser.updateUser(userData, updatePayload);
+      const returnData = await updateUser.updateUser(updatePayload);
       await updateUserChecker.updateUserChecker(returnData);
     }
   );
@@ -216,16 +209,12 @@ test.describe("API Testing Practice", () => {
     async ({ request }) => {
       const updateUser = new PatchAPI(request);
       const updateUserChecker = new PatchAPIChecker(request);
-      const userData = {
-        name: "morpheus",
-        job: "zion resident",
-      };
       const updatePayload = {
         name: "morpheus",
         job: "zion resident now",
       };
 
-      const returnData = await updateUser.updateUser(userData, updatePayload);
+      const returnData = await updateUser.updateUser(updatePayload);
       await updateUserChecker.updateUserChecker(returnData);
     }
   );

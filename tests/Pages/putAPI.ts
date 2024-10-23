@@ -8,9 +8,8 @@ export class PutAPI {
     this.request = request;
     this.urlNeeded = new URLNeeded(this.request);
   }
-  async updateUser(userData: any, updatePayload: any) {
+  async updateUser(updatePayload: { name: string; job: string }) {
     const requestURL = await this.urlNeeded.urlPutUpdate;
-    //! Duda con USER DATA
     const response = await this.request.put(requestURL, {
       data: updatePayload,
     });

@@ -8,7 +8,7 @@ export class PatchAPI {
     this.request = request;
     this.urlNeeded = new URLNeeded(this.request);
   }
-  async updateUser(userData:any, updatePayload: any) {
+  async updateUser(updatePayload: { name: string; job: string }) {
     const requestURL = await this.urlNeeded.urlPatchUpdate!;
     const response = await this.request.patch(requestURL, {
       data: updatePayload,

@@ -8,7 +8,7 @@ export class PostAPI {
     this.request = request;
     this.urlNeeded = new URLNeeded(this.request);
   }
-  async createNew(json: boolean, createPayLoad: any) {
+  async createNew(createPayLoad: { name: string; job: string }) {
     const requestURL = await this.urlNeeded.urlPostCreate;
     const response = await this.request.post(requestURL, {
       data: createPayLoad,
@@ -16,7 +16,10 @@ export class PostAPI {
     const postCreate = await response.json();
     return response;
   }
-  async registerSuccess(registerOKPayload: any) {
+  async registerSuccess(registerOKPayload: {
+    email: string;
+    password: string;
+  }) {
     const requestURL = await this.urlNeeded.urlPostRegisterOK!;
     const response = await this.request.post(requestURL, {
       data: registerOKPayload,
@@ -24,7 +27,7 @@ export class PostAPI {
     const postRegisterOk = await response.json();
     return response;
   }
-  async registerFailed(registerNOTPayload: any) {
+  async registerFailed(registerNOTPayload: { email: string }) {
     const requestURL = await this.urlNeeded.urlPostRegisterNO!;
     const response = await this.request.post(requestURL, {
       data: registerNOTPayload,
@@ -32,7 +35,7 @@ export class PostAPI {
     const postRegisterNo = await response.json();
     return response;
   }
-  async loginSuccess(loginOKPayload: any) {
+  async loginSuccess(loginOKPayload: { email: string; password: string }) {
     const requestURL = await this.urlNeeded.urlPostLoginOK!;
     const response = await this.request.post(requestURL, {
       data: loginOKPayload,
@@ -40,7 +43,7 @@ export class PostAPI {
     const postLoginOk = await response.json();
     return response;
   }
-  async loginFailed(loginNOTPayload: any) {
+  async loginFailed(loginNOTPayload: { email: string }) {
     const requestURL = await this.urlNeeded.urlPostLoginNO!;
     const response = await this.request.post(requestURL, {
       data: loginNOTPayload,

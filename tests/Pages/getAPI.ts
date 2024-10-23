@@ -18,7 +18,6 @@ export class GetAPI {
     const requestURL = await this.urlNeeded.urlSingleUser;
     const response = await this.request.get(requestURL);
     const getSingleUsers = await response.json();
-    //!Crear IF para obtener status o Data (consultar)
     return response;
   }
   async NotFound() {
