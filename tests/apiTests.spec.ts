@@ -9,44 +9,46 @@ test.describe('API Testing Practice',() =>{
     test.only('Get: List Users',async ({request})=>{
         const listUsers = new GetAPI(request);
         const listUserCheck = new GetAPIChecker(request);
-        await listUsers.ListUsers();
-        await listUserCheck.ListUsersCheck();
+        const returnData = await listUsers.ListUsers();
+        await listUserCheck.ListUsersCheck(returnData);
 
     })
     test.only('Get: Single User',async ({request})=>{
         const singleUsers = new GetAPI(request);
         const singleUserCheck = new GetAPIChecker(request);
-        await singleUsers.SingleUsers();
-        await singleUserCheck.SingleUsersCheck();
+        const returnData = await singleUsers.SingleUsers();
+        await singleUserCheck.SingleUsersCheck(returnData);
 
     })
     test.only('Get: Not Found',async ({request})=>{
         const notFound = new GetAPI(request);
         const notFoundCheck = new GetAPIChecker(request);
-        await notFound.NotFound();
-        await notFoundCheck.notFoundCheck();
+        const returnData = await notFound.NotFound();
+        await notFoundCheck.notFoundCheck(returnData);
 
 
     })
     test.only('Get: List Resource',async ({request})=>{
         const listResourse = new GetAPI(request);
         const listResourseCheck = new GetAPIChecker(request);
-        await listResourse.ListResourse();
-        await listResourseCheck.ListResourseCheck();
+        const returnData = await listResourse.ListResourse();
+        await listResourseCheck.ListResourseCheck(returnData);
 
 
     })
     test.only('Get: Single Resource',async ({request})=>{
         const singleResourse = new GetAPI(request);
         const singleResourseCheck = new GetAPIChecker(request);
-        await singleResourse.SingleResourse();
-        await singleResourseCheck.SingleResourseCheck();
+        const returnData = await singleResourse.SingleResourse();
+        await singleResourseCheck.SingleResourseCheck(returnData);
 
 
     })
     test('Post: Create',async ({request})=>{
         const createNew = new PostAPI(request);
         const createNewCheck = new PostAPIChecker(request);
+        const returnData = await createNew.createNew();
+        await createNewCheck.
 
     })
     test('Post: Register OK',async ({request})=>{
