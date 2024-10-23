@@ -20,24 +20,57 @@ export class PostAPI {
     const postCreate = await response.json();
     return postCreate;
   }
-  async registerSuccess() { // parametrizar y pasar el dato que necesita.
+  async registerSuccess() {
+    // parametrizar y pasar el dato que necesita.
     const requestURL = await this.urlNeeded.urlPostRegisterOK!;
-    const response = await this.request.get(requestURL);
+    const registerOKPayload = {
+      email: "eve.holt@reqres.in",
+      password: "pistol",
+    };
+
+    const response = await this.request.post(requestURL, {
+      data: registerOKPayload,
+    });
+
     const postRegisterOk = await response.json();
+    return postRegisterOk;
   }
   async registerFailed() {
     const requestURL = await this.urlNeeded.urlPostRegisterNO!;
-    const response = await this.request.get(requestURL);
+    const registerNOTPayload = {
+      email: "sydney@fife",
+    };
+
+    const response = await this.request.post(requestURL, {
+      data: registerNOTPayload,
+    });
+
     const postRegisterNo = await response.json();
+    return postRegisterNo;
   }
   async loginSuccess() {
     const requestURL = await this.urlNeeded.urlPostLoginOK!;
-    const response = await this.request.get(requestURL);
+    const loginOKPayload = {
+      email: "eve.holt@reqres.in",
+      password: "cityslicka",
+    };
+
+    const response = await this.request.post(requestURL, {
+      data: loginOKPayload,
+    });
     const postLoginOk = await response.json();
+    return postLoginOk;
   }
   async loginFailed() {
     const requestURL = await this.urlNeeded.urlPostLoginNO!;
-    const response = await this.request.get(requestURL);
+    const loginNOTPayload = {
+      email: "peter@klaven",
+    };
+
+    const response = await this.request.post(requestURL, {
+      data: loginNOTPayload,
+    });
     const postLoginNo = await response.json();
+    return postLoginNo;
   }
 }
