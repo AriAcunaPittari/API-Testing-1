@@ -1,4 +1,4 @@
-import { APIRequestContext, Page } from "playwright-core";
+import { APIRequestContext } from "playwright-core";
 import { URLNeeded } from "./urlNeeded";
 
 export class PatchAPI {
@@ -8,12 +8,17 @@ export class PatchAPI {
     this.request = request;
     this.urlNeeded = new URLNeeded(this.request);
   }
-  async updateUser(updatePayload: { name: string; job: string }) {
+  async updateUser(updatePayload: { name: string; job: string },json:boolean=false) {
     const requestURL = await this.urlNeeded.urlPatchUpdate!;
     const response = await this.request.patch(requestURL, {
       data: updatePayload,
     });
-    const patchUpdate = await response.json();
-    return response;
+
+    if (json===true){
+      const patchUpdate = await response.json();
+      return patchUpdate;
+    }else {
+      return response;
+    }
   }
 }

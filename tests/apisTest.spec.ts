@@ -9,6 +9,10 @@ import { PatchAPI } from "./Pages/patchAPI";
 import { PatchAPIChecker } from "./Checker/patchChecker";
 import { DeleteAPI } from "./Pages/deleteAPI";
 import { DeleteAPIChecker } from "./Checker/deleteChecker";
+import * as schemaInfo from "./schemas/schema"
+import * as schemaValidator from "../utils/schemaValidator";
+
+const schema = new schemaInfo.Schemas();
 
 test.describe("API Testing Practice", () => {
   test(
@@ -21,6 +25,8 @@ test.describe("API Testing Practice", () => {
       const listUserCheck = new GetAPIChecker(request);
       const returnData = await listUsers.ListUsers();
       await listUserCheck.ListUsersCheck(returnData);
+      const response = await request.get(process.env.URL_GET_LISTUSERS!);
+      await validSchema(response, schema.loginUsersSchema);
     }
   );
 
@@ -35,6 +41,8 @@ test.describe("API Testing Practice", () => {
       const returnData = await singleUsers.SingleUsers();
       console.log(returnData);
       await singleUserCheck.SingleUsersCheck(returnData);
+      const response = await request.get(process.env.URL_GET_SINGLEUSER!);
+      await validSchema(response, schema.loginUsersSchema);
     }
   );
 
@@ -48,6 +56,7 @@ test.describe("API Testing Practice", () => {
       const notFoundCheck = new GetAPIChecker(request);
       const returnData = await notFound.NotFound();
       await notFoundCheck.notFoundCheck(returnData);
+      //! hace falta en el Delete y NotFound?
     }
   );
 
@@ -61,6 +70,9 @@ test.describe("API Testing Practice", () => {
       const listResourseCheck = new GetAPIChecker(request);
       const returnData = await listResourse.ListResourse();
       await listResourseCheck.ListResourseCheck(returnData);
+
+      const response = await request.get(process.env.URL_GET_LISTRESOURCE!);
+      await validSchema(response, schema.resourceSchema);
     }
   );
 
@@ -74,6 +86,9 @@ test.describe("API Testing Practice", () => {
       const singleResourseCheck = new GetAPIChecker(request);
       const returnData = await singleResourse.SingleResourse();
       await singleResourseCheck.SingleResourseCheck(returnData);
+
+      const response = await request.get(process.env.URL_GET_SINGLERESOURCE!);
+      await validSchema(response, schema.resourceSchema);
     }
   );
 
@@ -91,6 +106,9 @@ test.describe("API Testing Practice", () => {
       };
       const returnData = await createNew.createNew(createPayLoad);
       await createNewCheck.createNewCheck(returnData);
+
+      const response = await request.get(process.env.URL_POST_CREATE!);
+      await validSchema(response, schema.updateUserSchema);
     }
   );
 
@@ -110,7 +128,10 @@ test.describe("API Testing Practice", () => {
         registerOKPayload
       );
       await registerSuccessCheck.registerOKCheck(returnData);
+      const response = await request.get(process.env.URL_POST_REGISTER_OK!);
+      await validSchema(response, schema.updateUserSchema);
     }
+
   );
 
   test(
@@ -128,6 +149,7 @@ test.describe("API Testing Practice", () => {
         registerNOTPayload
       );
       await registerFailedCheck.registerNOCheck(returnData);
+      //! Hace falta en el Failed?
     }
   );
 
@@ -145,6 +167,8 @@ test.describe("API Testing Practice", () => {
       };
       const returnData = await loginSuccess.loginSuccess(loginOKPayload);
       await loginSuccessCheck.loginOKCheck(returnData);
+      const response = await request.get(process.env.URL_POST_REGISTER_OK!);
+      await schemaValidator.validateSchema(response, schema.updateUserSchema);
     }
   );
 
@@ -180,6 +204,8 @@ test.describe("API Testing Practice", () => {
 
       const returnData = await updateUser.updateUser(updatePayload);
       await updateUserChecker.updateUserChecker(returnData);
+      const response = await request.get(process.env.URL_PUT_UPDATE!);
+      await validSchema(response, schema.updateUserSchema);
     }
   );
 
@@ -216,6 +242,8 @@ test.describe("API Testing Practice", () => {
 
       const returnData = await updateUser.updateUser(updatePayload);
       await updateUserChecker.updateUserChecker(returnData);
+      const response = await request.get(process.env.URL_PATCH_UPDATE!);
+      await validSchema(response, schema.updateUserSchema);
     }
   );
 });

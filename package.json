@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "getTest": "npx playwright test --grep @Get",
-    "postTest": "npx playwright test --grep @Post",
-    "putTest": "npx playwright test --grep @Put",
-    "patchTest": "npx playwright test --grep @Patch",
-    "deleteTest": "npx playwright test --grep @Delete"
+    "testGet": "npx playwright test --grep @Get",
+    "testPost": "npx playwright test --grep @Post",
+    "testPut": "npx playwright test --grep @Put",
+    "testPatch": "npx playwright test --grep @Patch",
+    "testDelete": "npx playwright test --grep @Delete"
   },
   "keywords": [],
   "author": "",
@@ -23,7 +23,8 @@
     "dotenv": "^16.4.5",
     "playwright": "^1.48.1",
     "playwright-core": "^1.48.1",
-    "undici-types": "^6.19.8"
+    "undici-types": "^6.19.8",
+    "zod": "^3.23.8"
   },
   "description": ""
 }
