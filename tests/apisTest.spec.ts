@@ -10,7 +10,7 @@ import { PatchAPIChecker } from "./Checker/patchChecker";
 import { DeleteAPI } from "./Pages/deleteAPI";
 import { DeleteAPIChecker } from "./Checker/deleteChecker";
 import * as schemaInfo from "./schemas/schema";
-import { validateSchema,validateSchemaData } from "../utils/schemaValidator";
+import { validateSchema } from "../utils/schemaValidator";
 
 const schema = new schemaInfo.Schemas();
 
@@ -25,7 +25,7 @@ test.describe("API Testing Practice", () => {
       const positiveCheck = new GetAPIChecker(request);
       const returnData = await listUsers.ListUsers();
       await positiveCheck.positiveCheck(returnData);
-      await validateSchemaData(returnData, schema.userLoginList);
+      await validateSchema(true,returnData, schema.userLoginList);
     }
   );
 
@@ -40,7 +40,7 @@ test.describe("API Testing Practice", () => {
       const returnData = await singleUsers.SingleUsers();
       console.log(returnData);
       await positiveCheck.positiveCheck(returnData);
-      await validateSchemaData(returnData, schema.userLogin);
+      await validateSchema(true,returnData, schema.userLogin);
     }
   );
 
@@ -67,7 +67,7 @@ test.describe("API Testing Practice", () => {
       const positiveCheck = new GetAPIChecker(request);
       const returnData = await listResourse.ListResourse();
       await positiveCheck.positiveCheck(returnData);
-      await validateSchemaData(returnData, schema.userResourceList);
+      await validateSchema(true,returnData, schema.userResourceList);
     }
   );
 
@@ -81,8 +81,7 @@ test.describe("API Testing Practice", () => {
       const positiveCheck = new GetAPIChecker(request);
       const returnData = await singleResourse.SingleResourse();
       await positiveCheck.positiveCheck(returnData);
-
-      await validateSchemaData(returnData, schema.userResource);
+      await validateSchema(true,returnData, schema.userResource);
     }
   );
 
@@ -101,7 +100,7 @@ test.describe("API Testing Practice", () => {
       const returnData = await createNew.createNew(createPayLoad);
       await positiveCheck.positiveCheck(returnData);
 
-      await validateSchema(returnData, schema.create);
+      await validateSchema(false,returnData, schema.create);
     }
   );
 
@@ -121,7 +120,7 @@ test.describe("API Testing Practice", () => {
         registerOKPayload
       );
       await positiveCheck.positiveCheck(returnData);
-      await validateSchema(returnData, schema.idToken);
+      await validateSchema(false,returnData, schema.idToken);
     }
   );
 
@@ -140,7 +139,7 @@ test.describe("API Testing Practice", () => {
         registerNOTPayload
       );
       await negativeCheck.negativeCheck(returnData);
-      await validateSchema(returnData, schema.infoError);
+      await validateSchema(false,returnData, schema.infoError);
     }
   );
 
@@ -158,7 +157,7 @@ test.describe("API Testing Practice", () => {
       };
       const returnData = await loginSuccess.loginSuccess(loginOKPayload);
       await positiveCheck.positiveCheck(returnData);
-      await validateSchema(returnData, schema.login);
+      await validateSchema(false,returnData, schema.login);
     }
   );
 
@@ -176,7 +175,7 @@ test.describe("API Testing Practice", () => {
 
       const returnData = await loginFailed.loginFailed(loginNOTPayload);
       await negativeCheck.negativeCheck(returnData);
-      await validateSchema(returnData, schema.infoError);
+      await validateSchema(false,returnData, schema.infoError);
     }
   );
 
@@ -195,7 +194,7 @@ test.describe("API Testing Practice", () => {
 
       const returnData = await updateUser.updateUser(updatePayload,false);
       await updateUserChecker.updateUserChecker(returnData);
-      await validateSchema(returnData, schema.userUpdate);
+      await validateSchema(false,returnData, schema.userUpdate);
     }
   );
 
@@ -233,7 +232,7 @@ test.describe("API Testing Practice", () => {
       const returnDataTrue = await updateUser.updateUser(updatePayload, true);
       const returnData = await updateUser.updateUser(updatePayload, false);
       await updateUserChecker.updateUserChecker(returnData);
-      await validateSchema(returnData, schema.userUpdate);
+      await validateSchema(false,returnData, schema.userUpdate);
     }
   );
 });
