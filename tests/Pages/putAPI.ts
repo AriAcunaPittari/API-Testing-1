@@ -8,12 +8,20 @@ export class PutAPI {
     this.request = request;
     this.urlNeeded = new URLNeeded(this.request);
   }
-  async updateUser(updatePayload: { name: string; job: string }) {
+  async updateUser(updatePayload: { name: string; job: string },json:boolean=false) {
     const requestURL = await this.urlNeeded.urlPutUpdate;
     const response = await this.request.put(requestURL, {
       data: updatePayload,
     });
-    const putUpdate = await response.json();
-    return response;
+    console.log( await this.request.put(requestURL, {
+      data: updatePayload,
+    }));
+    
+    if (json===true){
+      const putUpdate = await response.json();
+      return putUpdate;
+    }else {
+      return response;
+    }
   }
 }

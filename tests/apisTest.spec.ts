@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test } from "@playwright/test";
 import { GetAPI } from "./Pages/getAPI";
 import { GetAPIChecker } from "./Checker/getChecker";
 import { PostAPI } from "./Pages/postAPI";
@@ -9,8 +9,8 @@ import { PatchAPI } from "./Pages/patchAPI";
 import { PatchAPIChecker } from "./Checker/patchChecker";
 import { DeleteAPI } from "./Pages/deleteAPI";
 import { DeleteAPIChecker } from "./Checker/deleteChecker";
-import * as schemaInfo from "./schemas/schema"
-import * as schemaValidator from "../utils/schemaValidator";
+import * as schemaInfo from "./schemas/schema";
+import { validateSchema,validateSchemaData } from "../utils/schemaValidator";
 
 const schema = new schemaInfo.Schemas();
 
@@ -22,11 +22,10 @@ test.describe("API Testing Practice", () => {
     },
     async ({ request }) => {
       const listUsers = new GetAPI(request);
-      const listUserCheck = new GetAPIChecker(request);
+      const positiveCheck = new GetAPIChecker(request);
       const returnData = await listUsers.ListUsers();
-      await listUserCheck.ListUsersCheck(returnData);
-      const response = await request.get(process.env.URL_GET_LISTUSERS!);
-      await validSchema(response, schema.loginUsersSchema);
+      await positiveCheck.positiveCheck(returnData);
+      await validateSchemaData(returnData, schema.userLoginList);
     }
   );
 
@@ -37,12 +36,11 @@ test.describe("API Testing Practice", () => {
     },
     async ({ request }) => {
       const singleUsers = new GetAPI(request);
-      const singleUserCheck = new GetAPIChecker(request);
+      const positiveCheck = new GetAPIChecker(request);
       const returnData = await singleUsers.SingleUsers();
       console.log(returnData);
-      await singleUserCheck.SingleUsersCheck(returnData);
-      const response = await request.get(process.env.URL_GET_SINGLEUSER!);
-      await validSchema(response, schema.loginUsersSchema);
+      await positiveCheck.positiveCheck(returnData);
+      await validateSchemaData(returnData, schema.userLogin);
     }
   );
 
@@ -56,7 +54,6 @@ test.describe("API Testing Practice", () => {
       const notFoundCheck = new GetAPIChecker(request);
       const returnData = await notFound.NotFound();
       await notFoundCheck.notFoundCheck(returnData);
-      //! hace falta en el Delete y NotFound?
     }
   );
 
@@ -67,12 +64,10 @@ test.describe("API Testing Practice", () => {
     },
     async ({ request }) => {
       const listResourse = new GetAPI(request);
-      const listResourseCheck = new GetAPIChecker(request);
+      const positiveCheck = new GetAPIChecker(request);
       const returnData = await listResourse.ListResourse();
-      await listResourseCheck.ListResourseCheck(returnData);
-
-      const response = await request.get(process.env.URL_GET_LISTRESOURCE!);
-      await validSchema(response, schema.resourceSchema);
+      await positiveCheck.positiveCheck(returnData);
+      await validateSchemaData(returnData, schema.userResourceList);
     }
   );
 
@@ -83,12 +78,11 @@ test.describe("API Testing Practice", () => {
     },
     async ({ request }) => {
       const singleResourse = new GetAPI(request);
-      const singleResourseCheck = new GetAPIChecker(request);
+      const positiveCheck = new GetAPIChecker(request);
       const returnData = await singleResourse.SingleResourse();
-      await singleResourseCheck.SingleResourseCheck(returnData);
+      await positiveCheck.positiveCheck(returnData);
 
-      const response = await request.get(process.env.URL_GET_SINGLERESOURCE!);
-      await validSchema(response, schema.resourceSchema);
+      await validateSchemaData(returnData, schema.userResource);
     }
   );
 
@@ -99,16 +93,15 @@ test.describe("API Testing Practice", () => {
     },
     async ({ request }) => {
       const createNew = new PostAPI(request);
-      const createNewCheck = new PostAPIChecker(request);
+      const positiveCheck = new PostAPIChecker(request);
       const createPayLoad = {
         name: "morpheus",
         job: "leader",
       };
       const returnData = await createNew.createNew(createPayLoad);
-      await createNewCheck.createNewCheck(returnData);
+      await positiveCheck.positiveCheck(returnData);
 
-      const response = await request.get(process.env.URL_POST_CREATE!);
-      await validSchema(response, schema.updateUserSchema);
+      await validateSchema(returnData, schema.create);
     }
   );
 
@@ -119,7 +112,7 @@ test.describe("API Testing Practice", () => {
     },
     async ({ request }) => {
       const registerSuccess = new PostAPI(request);
-      const registerSuccessCheck = new PostAPIChecker(request);
+      const positiveCheck = new PostAPIChecker(request);
       const registerOKPayload = {
         email: "eve.holt@reqres.in",
         password: "pistol",
@@ -127,11 +120,9 @@ test.describe("API Testing Practice", () => {
       const returnData = await registerSuccess.registerSuccess(
         registerOKPayload
       );
-      await registerSuccessCheck.registerOKCheck(returnData);
-      const response = await request.get(process.env.URL_POST_REGISTER_OK!);
-      await validSchema(response, schema.updateUserSchema);
+      await positiveCheck.positiveCheck(returnData);
+      await validateSchema(returnData, schema.idToken);
     }
-
   );
 
   test(
@@ -141,15 +132,15 @@ test.describe("API Testing Practice", () => {
     },
     async ({ request }) => {
       const registerFailed = new PostAPI(request);
-      const registerFailedCheck = new PostAPIChecker(request);
+      const negativeCheck = new PostAPIChecker(request);
       const registerNOTPayload = {
         email: "sydney@fife",
       };
       const returnData = await registerFailed.registerFailed(
         registerNOTPayload
       );
-      await registerFailedCheck.registerNOCheck(returnData);
-      //! Hace falta en el Failed?
+      await negativeCheck.negativeCheck(returnData);
+      await validateSchema(returnData, schema.infoError);
     }
   );
 
@@ -160,15 +151,14 @@ test.describe("API Testing Practice", () => {
     },
     async ({ request }) => {
       const loginSuccess = new PostAPI(request);
-      const loginSuccessCheck = new PostAPIChecker(request);
+      const positiveCheck = new PostAPIChecker(request);
       const loginOKPayload = {
         email: "eve.holt@reqres.in",
         password: "cityslicka",
       };
       const returnData = await loginSuccess.loginSuccess(loginOKPayload);
-      await loginSuccessCheck.loginOKCheck(returnData);
-      const response = await request.get(process.env.URL_POST_REGISTER_OK!);
-      await schemaValidator.validateSchema(response, schema.updateUserSchema);
+      await positiveCheck.positiveCheck(returnData);
+      await validateSchema(returnData, schema.login);
     }
   );
 
@@ -179,13 +169,14 @@ test.describe("API Testing Practice", () => {
     },
     async ({ request }) => {
       const loginFailed = new PostAPI(request);
-      const loginFailedCheck = new PostAPIChecker(request);
+      const negativeCheck = new PostAPIChecker(request);
       const loginNOTPayload = {
         email: "peter@klaven",
       };
 
       const returnData = await loginFailed.loginFailed(loginNOTPayload);
-      await loginFailedCheck.loginNOCheck(returnData);
+      await negativeCheck.negativeCheck(returnData);
+      await validateSchema(returnData, schema.infoError);
     }
   );
 
@@ -202,10 +193,9 @@ test.describe("API Testing Practice", () => {
         job: "zion resident now",
       };
 
-      const returnData = await updateUser.updateUser(updatePayload);
+      const returnData = await updateUser.updateUser(updatePayload,false);
       await updateUserChecker.updateUserChecker(returnData);
-      const response = await request.get(process.env.URL_PUT_UPDATE!);
-      await validSchema(response, schema.updateUserSchema);
+      await validateSchema(returnData, schema.userUpdate);
     }
   );
 
@@ -239,11 +229,11 @@ test.describe("API Testing Practice", () => {
         name: "morpheus",
         job: "zion resident now",
       };
-
-      const returnData = await updateUser.updateUser(updatePayload);
+      //? "returnDataTrue" Lo dejo de ejemplo.
+      const returnDataTrue = await updateUser.updateUser(updatePayload, true);
+      const returnData = await updateUser.updateUser(updatePayload, false);
       await updateUserChecker.updateUserChecker(returnData);
-      const response = await request.get(process.env.URL_PATCH_UPDATE!);
-      await validSchema(response, schema.updateUserSchema);
+      await validateSchema(returnData, schema.userUpdate);
     }
   );
 });

@@ -8,11 +8,18 @@ export class GetAPI {
     this.request = request;
     this.urlNeeded = new URLNeeded(this.request);
   }
-  async ListUsers() {
+  async ListUsers(json:boolean = false) {
     const requestURL = await this.urlNeeded.urlListUsers;
     const response = await this.request.get(requestURL);
-    const getListUsers = await response.json();
-    return response;
+    if(json===true){
+      const getListUsers = await response.json();
+      console.log(response.json());
+      return getListUsers;
+      
+    }else{
+      return response;
+    }
+
   }
   async SingleUsers() {
     const requestURL = await this.urlNeeded.urlSingleUser;
@@ -23,7 +30,6 @@ export class GetAPI {
   async NotFound() {
     const requestURL = await this.urlNeeded.urlNotFound;
     const response = await this.request.get(requestURL);
-    const getNotFound = await response.json();
     return response;
   }
   async ListResourse() {

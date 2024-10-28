@@ -1,9 +1,11 @@
-// export function que parametros: apiresponse + schema
-// importar todo de ZOD
 import { APIResponse } from "playwright-core";
 import { ZodType } from "zod";
 
-export async function validateSchema(response: APIResponse, schema:ZodType){
-        const jsonResponse = await response.json();
-        schema.parse(jsonResponse.json());
+export async function validateSchema(response: APIResponse, schema: ZodType) {
+  const data = await response.json();
+  await schema.parse(data);
+}
+export async function validateSchemaData(response: APIResponse, schema: ZodType) {
+  const data = await response.json();
+  await schema.parse(data.data);
 }
